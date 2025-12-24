@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyectos - Quality Flooring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0;
+        }
+        
+        header.scrolled .header-top {
+            display: none;
+        }
+        
+        header.scrolled nav {
+            margin-top: 0;
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            transition: padding 0.3s ease;
+        }
+        
+        header.scrolled .header-container {
+            padding: 15px 40px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #A0826D;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        nav {
+            margin-top: 20px;
+            transition: margin 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #E8E8E8;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+        
+        nav a:hover {
+            color: #A0826D;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #A0826D;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white !important;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(160, 130, 109, 0.3);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(160, 130, 109, 0.5);
+            background: linear-gradient(135deg, #8B7355, #6B5D52);
+        }
+        
+        .contact-btn::after {
+            display: none;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 0 40px;
+        }
+        
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            line-height: 1.6;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 60px 0;
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #A0826D;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        /* Projects Section */
+        .projects-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            /* padding: 0 40px; */
+        }
+        
+        .section-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-intro h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .section-intro p {
+            font-size: 18px;
+            color: #666;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        /* Project Card */
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .project-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        
+        .project-layout.reverse {
+            direction: rtl;
+        }
+        
+        .project-layout.reverse > * {
+            direction: ltr;
+        }
+        
+        .project-images {
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            background: #f5f5f5;
+            min-height: 500px;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .project-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .project-image.main {
+            grid-column: span 2;
+            grid-row: span 2;
+        }
+        
+        .project-content {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .project-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+        
+        .project-content h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .project-location {
+            font-size: 16px;
+            color: #888;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+        
+        .project-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #888;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+        
+        .project-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .project-features li {
+            font-size: 15px;
+            color: #555;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .project-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #A0826D;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            padding: 80px 40px;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+        
+        .cta-content h2 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-content p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #A0826D;
+            padding: 18px 45px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+
+        /* ===== SLIDER EN PROYECTOS ===== */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    overflow: hidden;
+    background: #000;
+}
+
+.carousel-slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide.active {
+    display: block;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    font-size: 32px;
+    padding: 10px 16px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel-btn.prev { left: 15px; }
+.carousel-btn.next { right: 15px; }
+
+        
+        /* Mobile Styles */
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .logo {
+                height: 70px;
+            }
+            
+            nav {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                margin-top: 0;
+            }
+            
+            nav.active {
+                max-height: 500px;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+            }
+            
+            nav li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #333;
+            }
+            
+            nav li:last-child {
+                border-bottom: none;
+            }
+            
+            nav a {
+                display: block;
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+            
+            .contact-btn {
+                margin: 10px 20px;
+                display: inline-block;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 38px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                padding: 0 20px;
+            }
+            
+            .projects-section {
+                /* padding: 0 20px; */
+                margin: 50px auto;
+            }
+            
+            .project-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-layout.reverse {
+                direction: ltr;
+            }
+            
+            .project-images {
+                min-height: 350px;
+            }
+            
+            .project-content {
+                padding: 30px;
+            }
+            
+            .project-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 568px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            header.scrolled .header-container {
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .hero-section {
+                height: 350px;
+            }
+            
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            
+            .section-intro h2 {
+                font-size: 28px;
+            }
+            
+            .section-intro p {
+                font-size: 16px;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .project-content h3 {
+                font-size: 24px;
+            }
+            
+            .cta-content h2 {
+                font-size: 28px;
+            }
+            
+            .cta-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="header-top">
+                <img src="./logo.png" alt="Quality Floor Logo" class="logo">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./proyectos.html">Proyectos</a></li>
+                    <li><a href="./galeria.html">Galería</a></li>
+                    <li><a href="./servicios.html">Servicios</a></li>
+                    <li><a href="./contacto.html" class="contact-btn">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>NUESTROS PROYECTOS</h1>
+            <p>Más de 15 años transformando espacios con excelencia, calidad y dedicación. Cada proyecto es una historia de éxito y satisfacción.</p>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Proyectos Completados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">15</div>
+                <div class="stat-label">Años de Experiencia</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Clientes Satisfechos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">M² Instalados</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="section-intro">
+            <h2>PROYECTOS DESTACADOS</h2>
+            <p>Descubre nuestra trayectoria a través de nuestros proyectos más emblemáticos. Cada uno representa nuestro compromiso con la excelencia.</p>
+        </div>
+        
+        <!-- Project 1 -->
+        <div class="project-card">
+            <div class="project-layout">
+                <div class="carousel" id="carousel1">
+                    <div class="carousel-slide active">
+                        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=800&q=80">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80">
+                    </div>
+
+                    <button class="carousel-btn prev" onclick="moveSlide(-1,'carousel1')">❮</button>
+                    <button class="carousel-btn next" onclick="moveSlide(1,'carousel1')">❯</button>
+                </div>
+
+                <div class="project-content">
+                    <span class="project-tag">Residencial</span>
+                    <h3>Residencia Los Álamos</h3>
+                    <p class="project-location">📍 Polanco, Ciudad de México</p>
+                    <p class="project-description">Proyecto integral de instalación de pisos de madera de roble en una residencia de lujo. Se trabajó en 4 niveles incluyendo áreas sociales, privadas y de servicio.</p>
+                    
+                    <div class="project-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Área</span>
+                            <span class="detail-value">450 m²</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Duración</span>
+                            <span class="detail-value">6 semanas</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Material</span>
+                            <span class="detail-value">Roble Natural</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Año</span>
+                            <span class="detail-value">2024</span>
+                        </div>
+                    </div>
+                    
+                    <ul class="project-features">
+                        <li>Piso de madera sólida de roble europeo</li>
+                        <li>Acabado mate natural con protección UV</li>
+                        <li>Sistema de calefacción radiante integrado</li>
+                        <li>Garantía extendida de 10 años</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>¿TIENES UN PROYECTO EN MENTE?</h2>
+            <p>Cuéntanos tu idea y nosotros nos encargamos del resto. Calidad, diseño y compromiso en cada instalación.</p>
+            <a href="./contacto.html" class="cta-button">Solicitar Cotización</a>
+        </div>
+    </section>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/5210000000000" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32">
+            <path d="M19.11 17.35c-.29-.15-1.71-.84-1.98-.93-.27-.1-.47-.15-.66.15-.2.29-.76.93-.93 1.12-.17.2-.34.22-.63.07-.29-.15-1.24-.46-2.36-1.47-.87-.77-1.46-1.72-1.63-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.66-1.59-.9-2.18-.24-.57-.49-.49-.66-.5h-.57c-.2 0-.52.07-.79.37-.27.29-1.04 1.01-1.04 2.46 0 1.44 1.07 2.84 1.22 3.04.15.2 2.1 3.2 5.1 4.48.71.31 1.27.49 1.71.63.72.23 1.37.2 1.88.12.57-.08 1.71-.7 1.95-1.37.24-.66.24-1.23.17-1.35-.07-.12-.27-.2-.56-.34z"/>
+            <path d="M16 3C8.82 3 3 8.82 3 16c0 2.82.74 5.47 2.02 7.77L3 29l5.38-1.99A12.9 12.9 0 0016 29c7.18 0 13-5.82 13-13S23.18 3 16 3zm0 23.6c-2.25 0-4.35-.66-6.12-1.79l-.44-.27-3.19 1.18 1.18-3.11-.29-.45A10.55 10.55 0 0116 5.45c5.83 0 10.55 4.72 10.55 10.55S21.83 26.55 16 26.55z"/>
+        </svg>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const hamburger = document.querySelector('.hamburger');
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // const header = document.getElementById('mainHeader');
+        // window.addEventListener('scroll', () => {
+        //     header.classList.toggle('scrolled', window.scrollY > 50);
+        // });
+
+        
+        
+        
+
+function moveSlide(direction, carouselId) {
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    let index = [...slides].findIndex(slide => slide.classList.contains('active'));
+
+    slides[index].classList.remove('active');
+    index = (index + direction + slides.length) % slides.length;
+    slides[index].classList.add('active');
+}
+
+        function goToSlide(index, carouselId) {
+            const carousel = document.getElementById(carouselId);
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = carousel.querySelectorAll('.indicator-dot');
+            const counter = carousel.querySelector('.current-slide');
+
+            slides.forEach(s => s.classList.remove('active'));
+            dots.forEach(d => d.classList.remove('active'));
+
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            counter.textContent = index + 1;
+        }
+    </script>
+</body>
+</html>

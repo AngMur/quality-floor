@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality Flooring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0;
+        }
+        
+        header.scrolled .header-top {
+            display: none;
+        }
+        
+        header.scrolled nav {
+            margin-top: 0;
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            transition: padding 0.3s ease;
+        }
+        
+        header.scrolled .header-container {
+            padding: 15px 40px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #A0826D;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        nav {
+            margin-top: 20px;
+            transition: margin 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #E8E8E8;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+        
+        nav a:hover {
+            color: #A0826D;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #A0826D;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white !important;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(160, 130, 109, 0.3);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(160, 130, 109, 0.5);
+            background: linear-gradient(135deg, #8B7355, #6B5D52);
+        }
+        
+        .contact-btn::after {
+            display: none;
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+        
+        /* Content Sections */
+        .content-grid {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .content-card {
+            position: relative;
+            height: 400px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .content-card.large {
+            grid-row: span 2;
+            height: 820px;
+        }
+        
+        .content-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+            z-index: 1;
+        }
+        
+        .content-card h2 {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            color: white;
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            z-index: 2;
+            text-transform: uppercase;
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            padding: 80px 0;
+            margin-top: 40px;
+        }
+        
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 60px;
+            font-weight: 300;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .stars {
+            color: #D4AF37;
+            font-size: 24px;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .testimonial-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .author-info h4 {
+            font-size: 16px;
+            color: #1a1a1a;
+            margin-bottom: 3px;
+            font-weight: 600;
+        }
+        
+        .author-info span {
+            font-size: 13px;
+            color: #888;
+            font-weight: 300;
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .logo {
+                height: 70px;
+            }
+            
+            nav {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                margin-top: 0;
+            }
+            
+            nav.active {
+                max-height: 500px;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+            }
+            
+            nav li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #333;
+            }
+            
+            nav li:last-child {
+                border-bottom: none;
+            }
+            
+            nav a {
+                display: block;
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+            
+            .contact-btn {
+                margin: 10px 20px;
+                display: inline-block;
+                text-align: center;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .content-card.large {
+                grid-row: span 1;
+                height: 400px;
+            }
+            
+            .content-card h2 {
+                font-size: 36px;
+                top: 30px;
+                left: 30px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 568px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            header.scrolled .header-container {
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .content-card h2 {
+                font-size: 28px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .testimonials-section {
+                padding: 50px 0;
+            }
+            
+            .testimonials-container {
+                padding: 0 20px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
+            }
+            
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="header-top">
+                <img src="./logo.png" alt="Quality Floor Logo" class="logo">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./proyectos.html">Proyectos</a></li>
+                    <li><a href="./galeria.html">Galería</a></li>
+                    <li><a href="./servicios">Servicios</a></li>
+                    <li><a href="./contacto" class="contact-btn">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Content Grid -->
+    <div class="content-grid">
+        
+            <a href="./proyectos.html" class="content-card large">
+                
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80" alt="Proyectos">
+                <h2>PROYECTOS</h2>
+                      
+            </a>
+  
+
+            <a href="./servicios.html" class="content-card">
+                <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=800&q=80" alt="Blog">
+                <h2>SERVICIOS</h2>
+            </a>
+
+
+            <a href="./galeria.html" class="content-card">
+                <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80" alt="Galería">
+                <h2>GALERÍA</h2>
+            </a>
+
+    </div>
+    
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <h2 class="section-title">LO QUE DICEN NUESTROS CLIENTES</h2>
+            <p class="section-subtitle">Experiencias reales de quienes confiaron en nosotros</p>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Excelente trabajo, muy profesionales y puntuales. El piso de mi sala quedó espectacular. Superó todas mis expectativas."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>María Rodríguez</h4>
+                            <span>Ciudad de México</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"La calidad de los materiales es insuperable. Llevamos 2 años con el piso y se ve como nuevo. Totalmente recomendados."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JG</div>
+                        <div class="author-info">
+                            <h4>Jorge García</h4>
+                            <span>Guadalajara</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Desde el presupuesto hasta la instalación, todo fue impecable. El equipo es muy atento y cuidadoso con cada detalle."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LC</div>
+                        <div class="author-info">
+                            <h4>Laura Campos</h4>
+                            <span>Monterrey</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testimonial-text">"Transformaron completamente mi hogar. La asesoría fue excelente y me ayudaron a elegir el mejor piso para mis necesidades."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">CA</div>
+                        <div class="author-info">
+                            <h4>Carlos Aguilar</h4>
+                            <span>Puebla</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.923 0-7.435 6.050-13.485 13.485-13.485s13.485 6.050 13.485 13.485c0 7.435-6.050 13.485-13.485 13.485zM21.98 18.495c-0.248-0.123-1.465-0.722-1.692-0.805s-0.392-0.123-0.557 0.124c-0.165 0.247-0.641 0.805-0.784 0.969s-0.289 0.185-0.537 0.062c-0.248-0.124-1.045-0.385-1.99-1.229-0.735-0.657-1.232-1.467-1.376-1.715s-0.015-0.382 0.108-0.506c0.111-0.108 0.248-0.289 0.371-0.433s0.165-0.248 0.248-0.413 0.041-0.31-0.021-0.433c-0.062-0.124-0.557-1.341-0.764-1.836-0.2-0.481-0.404-0.415-0.557-0.423-0.144-0.007-0.309-0.009-0.474-0.009s-0.433 0.062-0.66 0.31c-0.227 0.248-0.866 0.846-0.866 2.063s0.887 2.393 1.010 2.558c0.124 0.165 1.734 2.647 4.201 3.712 0.587 0.254 1.045 0.406 1.402 0.519 0.589 0.188 1.125 0.162 1.549 0.098 0.472-0.071 1.465-0.598 1.671-1.176s0.207-1.073 0.145-1.176c-0.062-0.103-0.227-0.165-0.475-0.289z"/>
+        </svg>
+    </a>
+    
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const hamburger = document.querySelector('.hamburger');
+            
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        
+        // Cerrar el menú al hacer click en un enlace (móvil)
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 968) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Scroll effect - hide logo on scroll
+        // let lastScrollTop = 0;
+        // const header = document.getElementById('mainHeader');
+        
+        // window.addEventListener('scroll', () => {
+        //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+        //     if (scrollTop > 100) {
+        //         header.classList.add('scrolled');
+        //     } else {
+        //         header.classList.remove('scrolled');
+        //     }
+            
+        //     lastScrollTop = scrollTop;
+        // });
+    </script>
+</body>
+</html>

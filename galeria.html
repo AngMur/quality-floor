@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería - Quality Flooring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0;
+        }
+        
+        header.scrolled .header-top {
+            display: none;
+        }
+        
+        header.scrolled nav {
+            margin-top: 0;
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            transition: padding 0.3s ease;
+        }
+        
+        header.scrolled .header-container {
+            padding: 15px 40px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #A0826D;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        nav {
+            margin-top: 20px;
+            transition: margin 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #E8E8E8;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+        
+        nav a:hover {
+            color: #A0826D;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #A0826D;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white !important;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(160, 130, 109, 0.3);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(160, 130, 109, 0.5);
+            background: linear-gradient(135deg, #8B7355, #6B5D52);
+        }
+        
+        .contact-btn::after {
+            display: none;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 40px;
+        }
+        
+        .section-intro {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-intro h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .section-intro p {
+            font-size: 18px;
+            color: #666;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: white;
+            color: #666;
+            border: 2px solid #ddd;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            border-color: #A0826D;
+            color: #A0826D;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white;
+            border-color: #A0826D;
+        }
+        
+        /* Masonry Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            grid-auto-rows: 250px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+        
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.7));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            color: white;
+            z-index: 2;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-info {
+            transform: translateY(0);
+        }
+        
+        .gallery-info h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .gallery-info p {
+            font-size: 14px;
+            font-weight: 300;
+        }
+        
+        .category-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(160, 130, 109, 0.9);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+        
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: #A0826D;
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            padding: 20px;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+        
+        .lightbox-nav:hover {
+            color: #A0826D;
+        }
+        
+        .lightbox-prev {
+            left: -80px;
+        }
+        
+        .lightbox-next {
+            right: -80px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            padding: 80px 40px;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+        
+        .cta-content h2 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-content p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #A0826D;
+            padding: 18px 45px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .logo {
+                height: 70px;
+            }
+            
+            nav {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                margin-top: 0;
+            }
+            
+            nav.active {
+                max-height: 500px;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+            }
+            
+            nav li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #333;
+            }
+            
+            nav li:last-child {
+                border-bottom: none;
+            }
+            
+            nav a {
+                display: block;
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+            
+            .contact-btn {
+                margin: 10px 20px;
+                display: inline-block;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 38px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .gallery-section {
+                padding: 0 20px;
+                margin: 50px auto;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item.wide {
+                grid-column: span 1;
+            }
+            
+            .lightbox-prev {
+                left: 10px;
+            }
+            
+            .lightbox-next {
+                right: 10px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 568px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            header.scrolled .header-container {
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .hero-section {
+                height: 300px;
+            }
+            
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            
+            .section-intro h2 {
+                font-size: 28px;
+            }
+            
+            .section-intro p {
+                font-size: 16px;
+            }
+            
+            .filter-container {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+            
+            .cta-content h2 {
+                font-size: 28px;
+            }
+            
+            .cta-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="header-top">
+                <img src="./logo.png" alt="Quality Floor Logo" class="logo">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./proyectos.html">Proyectos</a></li>
+                    <li><a href="./galeria.html">Galería</a></li>
+                    <li><a href="./servicios.html">Servicios</a></li>
+                    <li><a href="./contacto" class="contact-btn">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>GALERÍA</h1>
+            <p>Inspiración y proyectos realizados</p>
+        </div>
+    </section>
+    
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="section-intro">
+            <h2>NUESTROS PROYECTOS</h2>
+            <p>Explora nuestra colección de proyectos completados. Cada espacio cuenta una historia de transformación, calidad y atención al detalle.</p>
+        </div>
+        
+        <!-- Filter Buttons -->
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="residencial">Residencial</button>
+            <button class="filter-btn" data-filter="comercial">Comercial</button>
+            <button class="filter-btn" data-filter="madera">Madera</button>
+            <button class="filter-btn" data-filter="porcelanato">Porcelanato</button>
+        </div>
+        
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item tall" data-category="residencial madera">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&q=80" alt="Sala moderna">
+                <div class="gallery-info">
+                    <h3>Sala Moderna</h3>
+                    <p>Piso de madera natural</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="comercial porcelanato">
+                <span class="category-tag">Comercial</span>
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="Oficina corporativa">
+                <div class="gallery-info">
+                    <h3>Oficina Corporativa</h3>
+                    <p>Porcelanato elegante</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="residencial madera">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?w=800&q=80" alt="Recámara acogedora">
+                <div class="gallery-info">
+                    <h3>Recámara Acogedora</h3>
+                    <p>Piso laminado premium</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item wide" data-category="comercial porcelanato">
+                <span class="category-tag">Comercial</span>
+                <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&q=80" alt="Espacio de trabajo">
+                <div class="gallery-info">
+                    <h3>Espacio de Trabajo</h3>
+                    <p>Porcelanato alto tráfico</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="residencial porcelanato">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Cocina contemporánea">
+                <div class="gallery-info">
+                    <h3>Cocina Contemporánea</h3>
+                    <p>Porcelanato símil mármol</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item tall" data-category="residencial madera">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Comedor familiar">
+                <div class="gallery-info">
+                    <h3>Comedor Familiar</h3>
+                    <p>Madera de roble</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="comercial porcelanato">
+                <span class="category-tag">Comercial</span>
+                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=80" alt="Recepción elegante">
+                <div class="gallery-info">
+                    <h3>Recepción Elegante</h3>
+                    <p>Porcelanato rectificado</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item wide" data-category="residencial madera">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=80" alt="Living amplio">
+                <div class="gallery-info">
+                    <h3>Living Amplio</h3>
+                    <p>Piso de madera ingeniería</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="comercial porcelanato">
+                <span class="category-tag">Comercial</span>
+                <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=800&q=80" alt="Sala de juntas">
+                <div class="gallery-info">
+                    <h3>Sala de Juntas</h3>
+                    <p>Porcelanato gris</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="residencial madera">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80" alt="Estudio en casa">
+                <div class="gallery-info">
+                    <h3>Estudio en Casa</h3>
+                    <p>Laminado símil madera</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item tall" data-category="comercial porcelanato">
+                <span class="category-tag">Comercial</span>
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" alt="Lobby corporativo">
+                <div class="gallery-info">
+                    <h3>Lobby Corporativo</h3>
+                    <p>Porcelanato pulido</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item" data-category="residencial porcelanato">
+                <span class="category-tag">Residencial</span>
+                <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80" alt="Baño moderno">
+                <div class="gallery-info">
+                    <h3>Baño Moderno</h3>
+                    <p>Porcelanato antideslizante</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+            <span class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">&#10094;</span>
+            <img id="lightboxImage" src="" alt="">
+            <span class="lightbox-nav lightbox-next" onclick="changeImage(1)">&#10095;</span>
+        </div>
+    </div>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>¿TE INSPIRASTE?</h2>
+            <p>Convierte tu visión en realidad. Contáctanos hoy para discutir tu proyecto y recibir una cotización personalizada.</p>
+            <a href="#contacto" class="cta-button">Iniciar Mi Proyecto</a>
+        </div>
+    </section>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.923 0-7.435 6.050-13.485 13.485-13.485s13.485 6.050 13.485 13.485c0 7.435-6.050 13.485-13.485 13.485zM21.98 18.495c-0.248-0.123-1.465-0.722-1.692-0.805s-0.392-0.123-0.557 0.124c-0.165 0.247-0.641 0.805-0.784 0.969s-0.289 0.185-0.537 0.062c-0.248-0.124-1.045-0.385-1.99-1.229-0.735-0.657-1.232-1.467-1.376-1.715s-0.015-0.382 0.108-0.506c0.111-0.108 0.248-0.289 0.371-0.433s0.165-0.248 0.248-0.413 0.041-0.31-0.021-0.433c-0.062-0.124-0.557-1.341-0.764-1.836-0.2-0.481-0.404-0.415-0.557-0.423-0.144-0.007-0.309-0.009-0.474-0.009s-0.433 0.062-0.66 0.31c-0.227 0.248-0.866 0.846-0.866 2.063s0.887 2.393 1.010 2.558c0.124 0.165 1.734 2.647 4.201 3.712 0.587 0.254 1.045 0.406 1.402 0.519 0.589 0.188 1.125 0.162 1.549 0.098 0.472-0.071 1.465-0.598 1.671-1.176s0.207-1.073 0.145-1.176c-0.062-0.103-0.227-0.165-0.475-0.289z"/>
+        </svg>
+    
+     <script>
+    // ===== MENU MOBILE =====
+    function toggleMenu() {
+        const nav = document.getElementById('mainNav');
+        const hamburger = document.querySelector('.hamburger');
+        nav.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    }
+
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 968) toggleMenu();
+        });
+    });
+
+    // ===== HEADER SCROLL =====
+    // const header = document.getElementById('mainHeader');
+    // window.addEventListener('scroll', () => {
+    //     header.classList.toggle('scrolled', window.scrollY > 50);
+    // });
+
+    // ===== GALLERY FILTER =====
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            galleryItems.forEach(item => {
+                const categories = item.dataset.category;
+                item.style.display =
+                    filter === 'all' || categories.includes(filter)
+                        ? 'block'
+                        : 'none';
+            });
+        });
+    });
+
+    // ===== LIGHTBOX =====
+    let currentImageIndex = 0;
+    let galleryImages = [];
+
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            galleryImages = Array.from(galleryItems)
+                .filter(i => i.style.display !== 'none')
+                .map(i => i.querySelector('img').src);
+
+            currentImageIndex = galleryImages.indexOf(
+                item.querySelector('img').src
+            );
+
+            openLightbox();
+        });
+    });
+
+    function openLightbox() {
+        document.getElementById('lightboxImage').src =
+            galleryImages[currentImageIndex];
+        document.getElementById('lightbox').classList.add('active');
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+    }
+
+    function changeImage(direction) {
+        currentImageIndex += direction;
+
+        if (currentImageIndex < 0)
+            currentImageIndex = galleryImages.length - 1;
+
+        if (currentImageIndex >= galleryImages.length)
+            currentImageIndex = 0;
+
+        document.getElementById('lightboxImage').src =
+            galleryImages[currentImageIndex];
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeLightbox();
+    });
+</script>
+
+</body>
+</html>

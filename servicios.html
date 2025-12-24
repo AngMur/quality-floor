@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios - Quality Flooring</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+        
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 0;
+        }
+        
+        header.scrolled .header-top {
+            display: none;
+        }
+        
+        header.scrolled nav {
+            margin-top: 0;
+        }
+        
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            transition: padding 0.3s ease;
+        }
+        
+        header.scrolled .header-container {
+            padding: 15px 40px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            height: 100px;
+            width: auto;
+            transition: height 0.3s ease;
+        }
+        
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+        }
+        
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #A0826D;
+            margin: 4px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+        
+        nav {
+            margin-top: 20px;
+            transition: margin 0.3s ease;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #E8E8E8;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+            text-transform: uppercase;
+        }
+        
+        nav a:hover {
+            color: #A0826D;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #A0826D;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-btn {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            color: white !important;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(160, 130, 109, 0.3);
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(160, 130, 109, 0.5);
+            background: linear-gradient(135deg, #8B7355, #6B5D52);
+        }
+        
+        .contact-btn::after {
+            display: none;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        /* Services Section */
+        .services-section {
+            max-width: 1400px;
+            margin: 80px auto;
+            padding: 0 40px;
+        }
+        
+        .section-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-intro h2 {
+            font-size: 42px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .section-intro p {
+            font-size: 18px;
+            color: #666;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: 35px;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .service-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .service-content p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+        
+        .service-features li {
+            font-size: 15px;
+            color: #555;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #A0826D;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        /* Why Choose Us Section */
+        .why-choose-section {
+            background: linear-gradient(135deg, #f8f8f8 0%, #e8e8e8 100%);
+            padding: 80px 0;
+        }
+        
+        .why-choose-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+        
+        .why-choose-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
+            margin-top: 50px;
+        }
+        
+        .benefit-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        
+        .benefit-card p {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #A0826D, #8B7355);
+            padding: 80px 40px;
+            text-align: center;
+            color: white;
+        }
+        
+        .cta-content h2 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-content p {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 35px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #A0826D;
+            padding: 18px 45px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6);
+        }
+        
+        .whatsapp-float svg {
+            width: 35px;
+            height: 35px;
+            fill: white;
+        }
+        
+        /* Mobile Styles */
+        @media (max-width: 968px) {
+            .hamburger {
+                display: flex;
+            }
+            
+            .logo {
+                height: 70px;
+            }
+            
+            nav {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                margin-top: 0;
+            }
+            
+            nav.active {
+                max-height: 500px;
+                margin-top: 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 20px 0;
+            }
+            
+            nav li {
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid #333;
+            }
+            
+            nav li:last-child {
+                border-bottom: none;
+            }
+            
+            nav a {
+                display: block;
+                padding: 15px 20px;
+                font-size: 15px;
+            }
+            
+            .contact-btn {
+                margin: 10px 20px;
+                display: inline-block;
+                text-align: center;
+            }
+            
+            .hero-content h1 {
+                font-size: 38px;
+            }
+            
+            .hero-content p {
+                font-size: 16px;
+            }
+            
+            .services-section {
+                padding: 0 20px;
+                margin: 50px auto;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .why-choose-container {
+                padding: 0 20px;
+            }
+            
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .whatsapp-float svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+        
+        @media (max-width: 568px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            header.scrolled .header-container {
+                padding: 10px 20px;
+            }
+            
+            .logo {
+                height: 60px;
+            }
+            
+            .hero-section {
+                height: 300px;
+            }
+            
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            
+            .section-intro h2 {
+                font-size: 28px;
+            }
+            
+            .section-intro p {
+                font-size: 16px;
+            }
+            
+            .cta-content h2 {
+                font-size: 28px;
+            }
+            
+            .cta-content p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="mainHeader">
+        <div class="header-container">
+            <div class="header-top">
+                <img src="./logo.png" alt="Quality Floor Logo" class="logo">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="./index.html">Inicio</a></li>
+                    <li><a href="./proyectos.html">Proyectos</a></li>
+                    <li><a href="./galeria.html">Galería</a></li>
+                    <li><a href="./servicios.html">Servicios</a></li>
+                    <li><a href="./contacto.html" class="contact-btn">Contáctanos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>NUESTROS SERVICIOS</h1>
+            <p>Soluciones profesionales para transformar tus espacios</p>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="section-intro">
+            <h2>LO QUE OFRECEMOS</h2>
+            <p>Contamos con un equipo altamente calificado y años de experiencia en la instalación y mantenimiento de todo tipo de pisos. Trabajamos con los mejores materiales del mercado para garantizar resultados duraderos y de la más alta calidad.</p>
+        </div>
+        
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=80" alt="Instalación de Pisos" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">🔨</div> -->
+                    <h3>Instalación de Pisos</h3>
+                    <p>Instalamos todo tipo de pisos con precisión y cuidado. Desde madera hasta porcelanato, garantizamos un acabado impecable.</p>
+                    <ul class="service-features">
+                        <li>Pisos de madera y laminados</li>
+                        <li>Porcelanato y cerámica</li>
+                        <li>Pisos vinílicos y SPC</li>
+                        <li>Acabados personalizados</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?w=800&q=80" alt="Pulido y Restauración" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">✨</div> -->
+                    <h3>Pulido y Restauración</h3>
+                    <p>Devolvemos la vida a tus pisos con nuestro servicio de pulido y restauración profesional.</p>
+                    <ul class="service-features">
+                        <li>Pulido de mármol y granito</li>
+                        <li>Restauración de pisos de madera</li>
+                        <li>Sellado y protección</li>
+                        <li>Reparación de daños</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Mantenimiento" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">🛠️</div> -->
+                    <h3>Mantenimiento</h3>
+                    <p>Programas de mantenimiento preventivo y correctivo para mantener tus pisos en perfecto estado.</p>
+                    <ul class="service-features">
+                        <li>Limpieza profunda especializada</li>
+                        <li>Encerado y abrillantado</li>
+                        <li>Tratamiento anti-manchas</li>
+                        <li>Planes de mantenimiento personalizados</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Asesoría" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">💡</div> -->
+                    <h3>Asesoría Personalizada</h3>
+                    <p>Te ayudamos a elegir el piso perfecto para tu espacio, considerando estilo, durabilidad y presupuesto.</p>
+                    <ul class="service-features">
+                        <li>Consultoría sin costo</li>
+                        <li>Muestras de materiales</li>
+                        <li>Presupuestos detallados</li>
+                        <li>Visita al sitio</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Proyectos Comerciales" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">🏢</div> -->
+                    <h3>Proyectos Comerciales</h3>
+                    <p>Soluciones especializadas para oficinas, locales comerciales y espacios corporativos de alto tráfico.</p>
+                    <ul class="service-features">
+                        <li>Pisos de alto tráfico</li>
+                        <li>Instalación en horarios flexibles</li>
+                        <li>Proyectos de gran escala</li>
+                        <li>Garantía extendida</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="service-card">
+                <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=800&q=80" alt="Proyectos Residenciales" class="service-image">
+                <div class="service-content">
+                    <!-- <div class="service-icon">🏠</div> -->
+                    <h3>Proyectos Residenciales</h3>
+                    <p>Transformamos tu hogar con pisos de calidad que combinan belleza, confort y durabilidad.</p>
+                    <ul class="service-features">
+                        <li>Diseño personalizado</li>
+                        <li>Instalación limpia y rápida</li>
+                        <li>Opciones eco-amigables</li>
+                        <li>Financiamiento disponible</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-section">
+        <div class="why-choose-container">
+            <div class="section-intro">
+                <h2>¿POR QUÉ ELEGIRNOS?</h2>
+                <p>Somos la mejor opción en pisos gracias a nuestro compromiso con la excelencia</p>
+            </div>
+            
+            <div class="why-choose-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">⭐</div>
+                    <h4>Experiencia Comprobada</h4>
+                    <p>Más de 15 años transformando espacios con resultados excepcionales</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <h4>Calidad Garantizada</h4>
+                    <p>Garantía en todos nuestros trabajos y materiales de primera calidad</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💼</div>
+                    <h4>Profesionalismo</h4>
+                    <p>Equipo certificado y capacitado en las últimas técnicas de instalación</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">⏱️</div>
+                    <h4>Puntualidad</h4>
+                    <p>Cumplimos con los tiempos de entrega acordados sin comprometer la calidad</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2>¿LISTO PARA TRANSFORMAR TU ESPACIO?</h2>
+            <p>Contáctanos hoy y recibe una cotización gratuita. Nuestro equipo está listo para hacer realidad tu proyecto.</p>
+            <a href="./contato.html" class="cta-button">Solicitar Cotización</a>
+        </div>
+    </section>
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.923 0-7.435 6.050-13.485 13.485-13.485s13.485 6.050 13.485 13.485c0 7.435-6.050 13.485-13.485 13.485zM21.98 18.495c-0.248-0.123-1.465-0.722-1.692-0.805s-0.392-0.123-0.557 0.124c-0.165 0.247-0.641 0.805-0.784 0.969s-0.289 0.185-0.537 0.062c-0.248-0.124-1.045-0.385-1.99-1.229-0.735-0.657-1.232-1.467-1.376-1.715s-0.015-0.382 0.108-0.506c0.111-0.108 0.248-0.289 0.371-0.433s0.165-0.248 0.248-0.413 0.041-0.31-0.021-0.433c-0.062-0.124-0.557-1.341-0.764-1.836-0.2-0.481-0.404-0.415-0.557-0.423-0.144-0.007-0.309-0.009-0.474-0.009s-0.433 0.062-0.66 0.31c-0.227 0.248-0.866 0.846-0.866 2.063s0.887 2.393 1.010 2.558c0.124 0.165 1.734 2.647 4.201 3.712 0.587 0.254 1.045 0.406 1.402 0.519 0.589 0.188 1.125 0.162 1.549 0.098 0.472-0.071 1.465-0.598 1.671-1.176s0.207-1.073 0.145-1.176c-0.062-0.103-0.227-0.165-0.475-0.289z"/>
+        </svg>
+    </a>
+    
+    <script>
+        function toggleMenu() {
+            const nav = document.getElementById('mainNav');
+            const hamburger = document.querySelector('.hamburger');
+            
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 968) {
+                    toggleMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
